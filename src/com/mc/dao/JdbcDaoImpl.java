@@ -19,10 +19,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class JdbcDaoImpl {
 
-    @Autowired
+    
     private DataSource dataSource;
 
-    private JdbcTemplate jdbcTemplate = new JdbcTemplate();
+    private JdbcTemplate jdbcTemplate; // = new JdbcTemplate();
 
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
@@ -36,12 +36,13 @@ public class JdbcDaoImpl {
         return dataSource;
     }
 
+    @Autowired
     public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
+//        this.dataSource = dataSource;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
     
-    public int getCircleCount(){        
-        jdbcTemplate.setDataSource(getDataSource());
+    public int getCircleCount(){                
         return jdbcTemplate.queryForInt("SELECT COUNT(*) FROM circle");      
     }    
 }
