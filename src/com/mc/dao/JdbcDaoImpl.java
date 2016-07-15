@@ -9,6 +9,7 @@ import com.mc.model.Circle;
 import java.sql.*;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,43 +19,30 @@ import org.springframework.stereotype.Component;
 @Component
 public class JdbcDaoImpl {
 
-    @Autowired
+    
     private DataSource dataSource;
 
+    private JdbcTemplate jdbcTemplate; // = new JdbcTemplate();
+
+    public JdbcTemplate getJdbcTemplate() {
+        return jdbcTemplate;
+    }
+
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+    
     public DataSource getDataSource() {
         return dataSource;
     }
 
+    @Autowired
     public void setDataSource(DataSource dataSource) {
-        this.dataSource = dataSource;
+//        this.dataSource = dataSource;
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
     
-    public Circle getCircle(int circleId) {
-        Connection conn = null;
-
-        try {
-//            String driver = "org.apache.derby.jdbc.ClientDriver";
-//            Class.forName(driver).newInstance();
-//            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db");
-            conn = dataSource.getConnection();
-            Circle circle;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM circle where id = ?");
-            ps.setInt(1, circleId);
-            circle = null;
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                circle = new Circle(circleId, rs.getString("name"));
-            }
-
-            return circle;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                conn.close();
-            } catch (SQLException e) {
-            }
-        }
-    }
+    public int getCircleCount(){                
+        return jdbcTemplate.queryForInt("SELECT COUNT(*) FROM circle");      
+    }    
 }
