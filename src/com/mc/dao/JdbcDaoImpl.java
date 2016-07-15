@@ -7,6 +7,7 @@ package com.mc.dao;
 
 import com.mc.model.Circle;
 import java.sql.*;
+import java.util.List;
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -51,6 +52,10 @@ public class JdbcDaoImpl {
         return jdbcTemplate.queryForObject("SELECT NAME FROM circle WHERE ID=?", new Object[] {circleId}, String.class);             
     }
     
+    public List<Circle> getAllCircles(){
+        String sql = "SELECT * FROM circle";
+        return jdbcTemplate.query(sql,new CircleMapper());
+    }
     public Circle getCircleForId(int circleId){
         String sql = "SELECT * FROM circle WHERE ID=?";        
         return jdbcTemplate.queryForObject(sql, new Object[]{circleId},new CircleMapper());

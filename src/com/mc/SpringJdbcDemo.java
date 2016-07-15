@@ -28,9 +28,9 @@ public class SpringJdbcDemo {
 
 //        System.out.println(dao.getCircle(1).getName());        
         System.out.println(dao.getCircleCount()); // will return count of circle
-        System.out.println(dao.getCircleName(1)); //Will return circle name
-        
-        System.out.println(dao.getCircleForId(1).getName());
+        System.out.println(dao.getCircleName(1)); //Will return circle name        
+        System.out.println(dao.getCircleForId(1).getName()); // will return circle name for id 1
+        System.out.println(dao.getAllCircles().size());
 
     }
 
