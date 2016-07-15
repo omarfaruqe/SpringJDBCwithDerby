@@ -44,6 +44,10 @@ public class JdbcDaoImpl {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
     
+    public void insertCircle(Circle circle){
+        String sql = "INSERT INTO CIRCLE(ID, NAME) VALUES( ?, ?)";
+        jdbcTemplate.update(sql, new Object[]{circle.getId(),circle.getName()});
+    }
     public int getCircleCount(){                
         return jdbcTemplate.queryForInt("SELECT COUNT(*) FROM circle");      
     }    
