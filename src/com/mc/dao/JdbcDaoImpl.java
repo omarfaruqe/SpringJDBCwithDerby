@@ -45,4 +45,8 @@ public class JdbcDaoImpl {
     public int getCircleCount(){                
         return jdbcTemplate.queryForInt("SELECT COUNT(*) FROM circle");      
     }    
+    
+    public String getCircleName(int circleId){
+        return jdbcTemplate.queryForObject("SELECT NAME FROM circle WHERE ID=?", new Object[] {circleId}, String.class);             
+    }
 }
