@@ -13,6 +13,9 @@ public class Circle {
     private int id;
     private String name;
 
+    public Circle() {      
+    }
+
     public int getId() {
         return id;
     }
