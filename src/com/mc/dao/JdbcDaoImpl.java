@@ -7,20 +7,36 @@ package com.mc.dao;
 
 import com.mc.model.Circle;
 import java.sql.*;
+import javax.sql.DataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author faruqe
  */
+@Component
 public class JdbcDaoImpl {
 
+    @Autowired
+    private DataSource dataSource;
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+    
     public Circle getCircle(int circleId) {
         Connection conn = null;
 
         try {
-            String driver = "org.apache.derby.jdbc.ClientDriver";
-            Class.forName(driver).newInstance();
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db");
+//            String driver = "org.apache.derby.jdbc.ClientDriver";
+//            Class.forName(driver).newInstance();
+//            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/db");
+            conn = dataSource.getConnection();
             Circle circle;
             PreparedStatement ps = conn.prepareStatement("SELECT * FROM circle where id = ?");
             ps.setInt(1, circleId);
@@ -32,7 +48,7 @@ public class JdbcDaoImpl {
             }
 
             return circle;
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             try {

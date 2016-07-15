@@ -8,6 +8,8 @@ package com.mc;
 import com.mc.dao.JdbcDaoImpl;
 import com.mc.model.Circle;
 import java.sql.SQLException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -18,11 +20,12 @@ public class SpringJdbcDemo {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
-        // TODO code application logic here
-
-        Circle circle = new JdbcDaoImpl().getCircle(1);
-        System.out.println(circle.getName());
+    public static void main(String[] args) throws Exception{
+//        Circle circle = new JdbcDaoImpl().getCircle(1);
+//        System.out.println(circle.getName());
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
+        JdbcDaoImpl dao = ctx.getBean("jdbcDaoImpl", JdbcDaoImpl.class);
+        System.out.println(dao.getCircle(1).getName());
 
     }
 
