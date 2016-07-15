@@ -44,6 +44,10 @@ public class JdbcDaoImpl {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
     
+    public void createTriangleTable(){
+        String sql = "CREATE TABLE TRIANGLE(ID INTEGER, NAME VARCHAR(50))";
+        jdbcTemplate.execute(sql);
+    }
     public void insertCircle(Circle circle){
         String sql = "INSERT INTO CIRCLE(ID, NAME) VALUES( ?, ?)";
         jdbcTemplate.update(sql, new Object[]{circle.getId(),circle.getName()});
