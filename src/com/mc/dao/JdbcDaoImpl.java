@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.*;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,6 +26,8 @@ public class JdbcDaoImpl {
     private DataSource dataSource;
 
     private JdbcTemplate jdbcTemplate; // = new JdbcTemplate();
+    
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
@@ -42,16 +45,25 @@ public class JdbcDaoImpl {
     public void setDataSource(DataSource dataSource) {
 //        this.dataSource = dataSource;
         this.jdbcTemplate = new JdbcTemplate(dataSource);
+        this.namedParameterJdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
     }
     
-    public void createTriangleTable(){
-        String sql = "CREATE TABLE TRIANGLE(ID INTEGER, NAME VARCHAR(50))";
-        jdbcTemplate.execute(sql);
+//    public void createTriangleTable(){
+//        String sql = "CREATE TABLE TRIANGLE(ID INTEGER, NAME VARCHAR(50))";
+//        jdbcTemplate.execute(sql);
+//    }
+//    public void insertCircle(Circle circle){
+//        String sql = "INSERT INTO CIRCLE(ID, NAME) VALUES( ?, ?)";
+//        jdbcTemplate.update(sql, new Object[]{circle.getId(),circle.getName()});
+//    }
+    
+    //Uisng Named Parameter
+    public void insertCircleUsingNamedParameter(Circle circle){
+        String sql = "INSERT INTO CIRCLE(ID, NAME) VALUES( :id, :name)";      
+        SqlParameterSource namedParameters = new MapSqlParameterSource("id",circle.getId()).addValue("name", circle.getName());
+        namedParameterJdbcTemplate.update(sql, namedParameters);        
     }
-    public void insertCircle(Circle circle){
-        String sql = "INSERT INTO CIRCLE(ID, NAME) VALUES( ?, ?)";
-        jdbcTemplate.update(sql, new Object[]{circle.getId(),circle.getName()});
-    }
+    
     public int getCircleCount(){                
         return jdbcTemplate.queryForInt("SELECT COUNT(*) FROM circle");      
     }    
