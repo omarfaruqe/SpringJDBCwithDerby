@@ -6,6 +6,7 @@
 package com.mc;
 
 import com.mc.dao.JdbcDaoImpl;
+import com.mc.dao.SimpleJdbcDaoImpl;
 import com.mc.model.Circle;
 import java.sql.SQLException;
 import org.springframework.context.ApplicationContext;
@@ -24,16 +25,19 @@ public class SpringJdbcDemo {
 //        Circle circle = new JdbcDaoImpl().getCircle(1);
 //        System.out.println(circle.getName());
         ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
-        JdbcDaoImpl dao = ctx.getBean("jdbcDaoImpl", JdbcDaoImpl.class);
+//        JdbcDaoImpl dao = ctx.getBean("jdbcDaoImpl", JdbcDaoImpl.class);
 
         
 //        System.out.println(dao.getCircle(1).getName());        
-        System.out.println(dao.getCircleCount()); // will return count of circle
+//        System.out.println(dao.getCircleCount()); // will return count of circle
         //System.out.println(dao.getCircleName(3)); //Will return circle name        
         //System.out.println(dao.getCircleForId(3).getName()); // will return circle name for id 1
         //System.out.println(dao.getAllCircles().size());
         //dao.insertCircle(new Circle(3,"Third Circle"));
         //dao.insertCircleUsingNamedParameter(new Circle(8,"eight Circle"));
+        
+        SimpleJdbcDaoImpl dao = ctx.getBean("simpleJdbcDaoImpl", SimpleJdbcDaoImpl.class);
+        System.out.println(dao.getCircleCount()); // will return count of circle
     }
 
 }
