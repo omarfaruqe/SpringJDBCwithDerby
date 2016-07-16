@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.*;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,15 +21,12 @@ import org.springframework.stereotype.Component;
  * @author faruqe
  */
 @Component
-public class JdbcDaoImpl {
-
-    
+public class JdbcDaoImpl {   
     private DataSource dataSource;
-
-    private JdbcTemplate jdbcTemplate; // = new JdbcTemplate();
-    
+    private JdbcTemplate jdbcTemplate; // = new JdbcTemplate();    
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
+    private SimpleJdbcTemplate simpleJdbcTemplate;
+    
     public JdbcTemplate getJdbcTemplate() {
         return jdbcTemplate;
     }
