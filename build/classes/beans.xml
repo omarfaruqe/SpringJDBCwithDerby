@@ -21,4 +21,21 @@
         <property name="dataSource" ref="dataSource" />
    </bean>
    
+   <!--Hibernate3 integration with Spring-->
+   <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+       <property name="dataSource" ref="dataSource"/>
+       <property name="packagesToScan" value="com.mc.model"/>
+       
+       <property name="hibernateProperties">
+           <props>
+               <prop key="dialect">org.hibernate.dialect.DerbyDialect</prop>
+           </props>
+       </property>
+   </bean>
+   
+<!--      Hibernate4 integration with Spring
+   <bean id="sessionFactory" class="org.springframework.orm.hibernate4.SessionFactoryUtils">
+       <property name="dataSource" ref="dataSource"/>
+   </bean>-->
+   
 </beans>

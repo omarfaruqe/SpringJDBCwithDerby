@@ -5,6 +5,7 @@
  */
 package com.mc;
 
+import com.mc.dao.HibernateDaoImpl;
 import com.mc.dao.JdbcDaoImpl;
 import com.mc.dao.SimpleJdbcDaoImpl;
 import com.mc.model.Circle;
@@ -25,6 +26,7 @@ public class SpringJdbcDemo {
 //        Circle circle = new JdbcDaoImpl().getCircle(1);
 //        System.out.println(circle.getName());
         ApplicationContext ctx = new ClassPathXmlApplicationContext("beans.xml");
+
 //        JdbcDaoImpl dao = ctx.getBean("jdbcDaoImpl", JdbcDaoImpl.class);
 
         
@@ -36,7 +38,12 @@ public class SpringJdbcDemo {
         //dao.insertCircle(new Circle(3,"Third Circle"));
         //dao.insertCircleUsingNamedParameter(new Circle(8,"eight Circle"));
         
-        SimpleJdbcDaoImpl dao = ctx.getBean("simpleJdbcDaoImpl", SimpleJdbcDaoImpl.class);
+//        DAO Support
+//        SimpleJdbcDaoImpl dao = ctx.getBean("simpleJdbcDaoImpl", SimpleJdbcDaoImpl.class);
+//        System.out.println(dao.getCircleCount()); // will return count of circle
+        
+        //Using Hibernate
+        HibernateDaoImpl dao = ctx.getBean("hibernateDaoImpl", HibernateDaoImpl.class);
         System.out.println(dao.getCircleCount()); // will return count of circle
     }
 
