@@ -1,4 +1,4 @@
-# SpringJDBCwithDerby
+# Spring JDBC database connectivity with Derby Database
 Spring JDBC connectivity with apache Derby database
 
 Database Name: db
