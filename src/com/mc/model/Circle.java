@@ -5,11 +5,16 @@
  */
 package com.mc.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  *
  * @author faruqe
  */
+@Entity
 public class Circle {
+    @Id
     private int id;
     private String name;
 
